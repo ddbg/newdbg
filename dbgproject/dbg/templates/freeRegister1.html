@@ -169,7 +169,13 @@
                     </div>
                        
                     <div class="from">
-                        <span>From. 닉네임</span>
+                      
+                        <br>
+                        {% if user.is_authenticated %} <!--등록된 유저가 맞다면-->
+                    <div class="from">
+                      <span> From. {{user.user_nickname}}</span>
+                    </div>
+                    {% endif %}
                     </div>
                     
                     <div class="submitBtn">
