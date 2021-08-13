@@ -307,7 +307,8 @@
                 {% endif %}
 
                 {% if user.is_authenticated %} <!--등록된 유저가 맞다면-->
-                {{user.user_nickname}}
+
+                <span class="headerBtn" style="color:#6a6081; font-size: 13px;">{{user.user_nickname}}</span>
                 <span class="loginBtn"><a href="{% url 'logout' %}">로그아웃</a></span>
                 
                 {% endif %}
