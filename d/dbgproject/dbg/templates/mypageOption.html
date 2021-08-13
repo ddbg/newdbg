@@ -1,0 +1,222 @@
+<!-- {% load static %}
+<!DOCTYPE html>
+<html lang = "kr">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+         <!--부트스트랩 CSS/JS-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="{% static 'app_name/css/document.css' %}">
+
+
+        <style>
+
+            @font-face {
+            font-family: 'GmarketSansLight';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            }
+
+            body{
+                max-width: 850px;
+                max-height: 660px;
+                background-color: #726C7B;
+            }
+
+            .MainImage{
+                width:450px;
+                height:190px;
+                margin-bottom: 30px;
+                border-radius: 10px;
+            }
+
+            .profile-img{
+                position:absoulte;
+                width:110%;
+                height:50%;
+                object-fit: cover;
+                border-radius: 50px;
+                
+            }
+            .img-thumbnail{
+                position:absoulte;
+                width: 100%;
+                height:100%;
+                object-fit:cover;
+                border-radius: 10px;
+               
+            }
+            .mypage-menu{
+                margin: -5px;
+                color:#BEB5D3;
+                text-align: left;
+            }
+            .mypageShape{
+                margin-left:10px;
+                margin-top: 10px;
+                width: 820px;
+                height:575px;
+                background-image:url("{% static 'MypageBackground.png' %}");
+                background-size: 100%;
+                display :flex;
+                flex-direction:row;
+            }
+            .line{
+                margin-top: -5px;
+                margin-bottom: 5px;
+                width: 290px;
+                height : 3px;
+                background-color:thistle;
+            }
+            .listline{
+                margin-top: 11px;
+                width: 2px;
+                height : 250px;
+                background-color: thistle;;
+            }
+            
+            .left {
+                width: 180px;
+                height: 445px;
+                padding : 20px;
+                margin : 30px;
+                color:#726C7B;
+            }
+            .right {
+                width: 450px;
+                height: 445px;
+                padding : 20px;
+                margin : 20px;
+                color:#726C7B;
+            }
+
+            .Missyou-img{
+                position:absolute;
+                width:10%;
+                height:13%;
+                object-fit: cover;
+                border-radius: 20px;
+                box-shadow: 2px 4px 12px 0 rgb(0 0 0 / 14%);
+            }
+
+            .nametag{
+                width: 50px;
+                height: 445px;
+                padding : 20px;
+                margin : 9px;
+                color: #726C7B;
+            }
+
+            .showtag{
+                text-align: center;
+                width :80px;
+                height : 40px;
+                background-image:url("{% static 'nametag.png' %}");
+                background-size: 100%;
+
+                
+            }
+            
+            .rightlist{
+                display :flex;
+                flex-direction:row;
+            }
+
+            .listright{
+                margin-left: 10px;
+            }
+
+            .Nonshowtag{
+                margin-left: 32px;
+                width :65px;
+                height : 32px;
+                background-image:url("{% static 'nametag.png' %}");
+                background-size: 100%;
+
+            }
+
+        </style>
+
+    </head>
+    <body onresize="parent.resizeTo(870,660)" onload="parent.resizeTo(870,660)" link="#726C7B", vlink="#726C7B", alink="#726C7B">
+        {%csrf_token%}
+        <!-- 기본 모양 --> 
+        <div class="mypageShape">
+
+            <!-- 왼쪽 프레임 관리 -->
+            <div class="left"> 
+                <br>
+                <img src = "{{Animal.profile.photo}}" class="profile-img">
+                <br>
+                <h3>{{Animal.name}}</h3>
+                <strong>{{Animal.birthday}} ~ {{Animal.memorialday}}</strong>
+                <br>
+                <br>
+                <strong>{{Animal.introduce}}</strong>
+            </div>
+
+            <!-- 오른쪽 프레임 관리 -->
+            <div class="right">
+                {% csrf_token %}
+
+                <form action = "{%url 'mypageUpdate' animal.animal_id %}" method="post">
+                    <div class = "namechange">
+                        <p>이름 : <input type ="text" name = "animal_id" value = {{Animal.name}}></p>
+                    </div>
+
+                    <div class = "MainImagechange">
+                        <p>프로필변경 <input type ="image" name = "profile_photo" value = {{Animal.profile_photo}}></p>
+                    </div>
+
+                    <div class = "day">
+                        <p>탄생일 : <input type ="text" name = "birthday" value = {{Animal.birthday}}></p>
+                        <p>제삿날 : <input type ="text" name = "memorialday" value = {{Animal.memorialday}}></p>
+                    </div>
+
+                    <div class = "introduceChange">
+                        소개글 : <textarea name = "introduce" id="" cols="30" rows="10">{{Animal.introduce}}</textarea>
+                    </div>
+
+                    <div class = "delete">
+                        <a herf = "{%url 'delete' animal.animal_id %}"> 반려동물 탈퇴하기 </a>
+                    </div>
+                    <button type = "submit"> 수정완료 </button>
+                </form>
+                
+            </div>
+
+
+            <!-- 이름 선택 부분 -->
+            <div class="nametag">
+                <br><br>
+                <div class = "showtag" >
+                   <strong>&nbsp;토순이</strong>
+                </div>
+                <br>
+                <br>
+                <div class = "Nonshowtag">
+                    <strong>&nbsp;&nbsp;나나</strong>
+                </div>
+                <br>
+                <br>
+                <div class = "Nonshowtag">
+                    <strong>&nbsp;&nbsp;뿌꾸</strong>
+                </div>
+                <br>
+                <br>
+                <div class = "Nonshowtag">
+                    <strong>&nbsp;&nbsp;레옹</strong>
+                </div>
+
+            </div>
+        </div>
+    </body>
+</html> -->

@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+
+    <!-- 이 html에 추가되는 CSS -->
+    {% block css %}
+    <style>        
+    
+        /* 현재 카테고리 설명하는 부분 */
+        .currentCategory{
+            margin: 30px;
+            color:#BEB5D3;
+            text-align: center;
+        }
+    
+        .registerLetter{
+            position: relative;
+            background-image: url(https://postfiles.pstatic.net/MjAyMTA3MDFfMjcg/MDAxNjI1MTM1MDczNzM3.0qWdyh5WGjLWpQV3uCnpKI-c7gyU2fzDjxmEWgHsossg.Q9VCaLVvZ5ZJZr0ye6VIn9Daj-MwnOc4RVxKbfIInn0g.JPEG.01yhgrace/bg-masthead.jpg?type=w966);
+            background-repeat: no-repeat;
+            padding: 15px 100px 80px 20px ;
+            width: 80%;
+            margin: 10%;
+            top: -50px;
+        }
+        .registerLetter input{
+            font-size: 13px;
+            width: 170px; height: 35px;
+            border: 3px solid #a19da7;
+            border-radius: 5px;
+        }
+        
+        .nameBox label{
+            font-size: 30px;
+            font-weight: bold;
+            color:#726C7B;
+            margin-right: 5px;
+        }
+        .nameBox input{position: absolute; margin-top: 5px;}
+        .infoBox{ margin: 50px 83px; color:#726C7B;}
+        .infoBox label{
+            font-size: 15px; 
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+        #att_zone{
+            position: relative;
+            width: 100%;
+            min-height:150px;
+            padding:10px;
+            border: 3px solid #a19da7;
+            border-radius: 5px;
+            background-color: white;
+        }
+        #att_zone label{
+            position: absolute;
+            right: 15px;
+            font-size: 25px;
+        }
+        #att_zone:empty:before{
+            content : attr(data-placeholder);
+            color : #999;
+            font-size:.9em;
+        }
+
+        .registerLetter textarea{
+            font-size: 13px;
+            width: 100%; height: 200px;
+            border: 3px solid #a19da7;
+            border-radius: 5px;
+        }
+        
+        .from{
+            display: flex;
+            justify-content: flex-end;
+            font-size: 20px;
+            font-weight: bold;
+            color:#726C7B;
+        }
+
+        .letter{
+            display: flex;
+            justify-content: center;
+            font-size: 30px;
+            font-weight: bold;
+            color:#726C7B;
+        }
+        
+        .pressedBtn{
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 6px;
+        }
+        .pressedBtn button{
+            border: 3px solid #BEB5D3;
+            border-radius: 6px;
+            color: rgb(156, 145, 173);
+            font-weight: bold;
+            background-color: rgba(0,0,0,0);
+        }
+        .pressedBtn button:hover{
+            background-color: #BEB5D3;
+            color: white;
+        }
+
+    </style>
+
+
+    {% endblock %}
+    <!--본문 내용-->
+    {% block content %}
+
+    {% load static %}
+
+        <div class="container">
+
+            <div class="registerLetter">
+                <form action="{% url 'enroll' %}"  method="post">
+                    <!--Csrf 공격을 막기 위해 반드시 처음에 사용-->
+                    {%csrf_token%}
+              
+                    <br>
+                    <div class="letter">
+                        <span>무지개 건너편으로 부터 <br> 초대장이 날라왔습니다.</span>
+                    </div>
+                    <br>
+                    <br>
+                    <br> <br>
+
+                    <br> <br>
+                    <br> <br>
+                    <br>
+                   
+                  
+
+                       
+                    <div class="from">
+                        <span>초대에 응하시겠습니까?</span>
+                    </div>
+
+                    <div class="pressedBtn">
+                        <button type="pressed" formaction="{% url 'enroll' %}">일반관</button>
+                    </div>
+
+                    <div class="pressedBtn">
+                        <button type="pressed" formaction="{% url 'honorRegister1' %}">명예관</button>
+                    </div>
+
+                    <div class="pressedBtn">
+                        <button type="pressed" formaction="{% url 'freeRegister1' %}">자유로운 영혼</button>
+                    </div>
+
+                </form>   
+
+            </div>
+
+        </div>
+        
+        
+
+    {% endblock %}

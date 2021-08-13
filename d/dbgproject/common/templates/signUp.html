@@ -1,0 +1,414 @@
+{% extends 'base.html' %}
+
+
+    <!-- 이 html에 추가되는 CSS -->
+    {% block css %}
+    <style>
+      
+        /* 현재 카테고리 설명하는 부분 */
+        a{text-decoration: none;}
+        .container{
+            width:30%;
+            margin:10px auto;
+            
+            display: flex;
+            flex-direction:column;
+            justify-content: center;
+            text-align: center;
+            box-sizing: border-box;
+            
+        }
+        .currentCategory{
+            margin-top: 0;
+            color:#726C7B;
+            text-align: center;
+            font-size:45px;
+           
+        }
+        /* 입력창*/
+        .id_area{
+            margin:0;
+            color:#726C7B;
+            text-align: left;
+            
+        }
+        .id_area input{
+            height:63px;
+            width: 100%;
+            padding:5px 25px;
+            border: 2px solid #a9a1bd; 
+            border-radius: 10px;
+            font:21px solid;
+            color:#726C7B;
+            background-color:#EFECF4;
+        }
+        .id_area p{
+            margin:0;
+        }
+        /*인증번호 전송,계정 연동, 회원가입 완료 클릭 버튼*/
+        .log_login {
+            width:100%;
+            height:63px; 
+            font-size: 21px;
+            color:white;
+            padding: 3px 10px 2px;
+            background-color: #BEB5D3;
+            border: 2px solid #BEB5D3;
+            border-radius: 10px;
+            margin-bottom: 5px;
+            }
+        .log_login:hover{
+            font-weight: bold; 
+            color:#BEB5D3; 
+            background-color: white;
+        }
+        /* 계정 연동 창 */
+        .link_account{
+            display:flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height:100%;
+            text-align: left;
+            font: #726C7B;
+            width: 100%;
+        }
+        .link_account h2{
+            margin-top:20px;
+
+        }
+        /* 계정 선택 창 */
+        .account{
+            
+            display:inline-flex;
+            width:100%;
+            height:25px; 
+            
+            margin-bottom: 5px;
+           
+            font:21px solid;
+            font-weight: bold;
+            color:#726C7B;
+            
+            text-align: left;
+            align-items: flex-end;
+            
+        }
+        .account p{
+            
+            margin:0 5px; 
+        }
+        /*.account{
+            
+            display:inline-flex;
+            width:100%;
+            height:63px; 
+            padding: 3px 10px 2px;
+            margin-bottom: 5px;
+            border: 2px solid #a9a1bd; 
+            border-radius: 10px;
+            font:21px solid;
+            font-weight: bold;
+            color:#726C7B;
+            background-color:#EFECF4;
+            text-align: left;
+            align-items: center;
+            
+        }
+        .account p{
+            
+            margin:0 10px; 
+        }
+        #plus_button{
+            position:relative;
+            
+            top:-5px;
+            font:45px solid;
+            color: #BEB5D3;
+            
+        }*/
+        /* 확인 취소 버튼 */
+        .config_cancel{
+            display:flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding:30px 10px 10px;
+        }
+        .config_cancel input{
+            flex-basis:49%;
+        }
+        /* 팝업창 확인 취소 버튼 */
+        .config_cancel button{
+            
+            flex-basis:49%;
+        }
+        /* footer 아래 고정 */
+        html,body{
+            height: 100%;
+        }
+        body{
+            display:flex;
+            flex-direction: column;
+        }
+        footer{
+            flex-shrink: 0;
+        }
+        .container{
+            flex: 1;
+        }
+
+
+        /* 팝업 */
+        .background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+
+        /* 숨기기 */
+        z-index: -1;
+        opacity: 0;
+      }
+
+      .show {
+        opacity: 1;
+        z-index: 1000;
+        transition: all 0.5s;
+      }
+
+      .window {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      .popup {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #ffffff;
+        box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
+
+        /* 임시 지정 */
+        width: 600px;
+        height: 600px;
+
+        /* 초기에 약간 아래에 배치 */
+        transform: translate(-50%, -40%);
+      }
+
+      .show .popup {
+        transform: translate(-50%, -50%);
+        transition: all 0.5s;
+        padding:15px;
+      }
+    
+    </style>
+
+    {% endblock %}
+    
+    <!--본문 내용-->
+    {% block content %}
+    <div class="container">
+        <div class="currentCategory">
+            <h1><br>회원가입</h1><br>
+        </div>
+        <br>
+        <form action="{% url 'signUp'%}" method="POST">
+            {%csrf_token%}
+            <!-- 아이디/비번 입력 창-->
+            <div class="id_area">
+                <label>이름</label><br>
+                <input type="text" name="name">
+            </div>
+            <br>
+            <div class="id_area">
+                <label>닉네임</label><br>
+                <input type="text" name="nickname">
+                <p>이미 사용중인 닉네임입니다.</p>
+            </div>
+
+            <br>
+            <div class="id_area">
+                <label>이메일</label><br>
+                <input type="text" name="id">
+                <p>이미 사용중인 이메일입니다.</p>
+            </div>
+            <br>
+
+            <div class="id_area">
+                <label>비밀번호</label><br>
+                <input type="password" name="password1">
+                <p>* 숫자, 영문, 특수문자를 사용하여 최소 8자리 이상 입력하세요.<br>
+                    * [ ] \ 는 사용할 수 없습니다.</p>
+            </div>
+            <br>
+            <div class="id_area">
+                <label>비밀번호 확인</label><br>
+                <input type="password" name="password2">
+            </div>
+            <br>
+
+            <div class="id_area">
+                <label margin-bottom="0;">전화번호</label><br>
+                <input type="text" name="phone_number">
+            </div>
+            <br>
+            <!--인증번호 전송 버튼-->
+            <input type="submit" title="인증번호 전송" alt="인증번호 전송" value="인증번호 전송" class="log_login">
+            <br>
+            <!--인증번호 입력창-->
+            <div class="id_area">
+                <input type="text" name="phone_number_config" placeholder="인증번호를 입력해주세요">
+            </div>
+            <br>
+            <!-- 계정연동 버튼 -->
+            
+            <button type="button" data-bs-toggle="modal" data-bs-target="#myModal" id="show" class="log_login" name=link>계정연동</button>
+            <br>
+            
+            
+            
+            <!--회원가입완료 버튼-->
+            <input type="submit" title="회원가입 완료" alt="회원가입 완료" value="회원가입 완료" class="log_login">
+
+            <div class="background">
+                <div class="window">
+                  <div class="popup">
+                        <div class="link_account">
+                            <div class="popup_top">
+                                <h2>
+                                    계정연동 하시겠습니까?
+                                </h2>
+                                <p>반려동물 계정 1개를 연결해주세요.</p>
+                            </div>
+                            <br>
+                            <!--계정 채널 선택 화면-->
+                            <div class="popup_middle">
+                                <div class="account">
+                                    <p>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
+                                        <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"></path>
+                                        </svg>
+                                    </p>
+                                    <p>페이스북</p>
+                                    <br>
+                                </div>
+                                <div class="id_area">
+                                    <input type="text" name="link_linkaccount1">
+                                </div>
+                                <br>
+                                <div class="account">
+                                    <p>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
+                                            <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"></path>
+                                        </svg>
+                                    </p>
+                                    <p>트위터</p>
+                                    <br>
+                                </div>
+                                <div class="id_area">
+                                    <input type="text" name="link_linkaccount2">
+                                </div>
+                                <br>
+                                <div class="account">
+                                    <p>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">
+                                            <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"></path>
+                                        </svg>
+                                    </p>
+                                    <p>인스타그램</p>
+                                    <br>
+                                </div>
+                                <div class="id_area">
+                                    <input type="text" name="link_linkaccount3">
+                                </div>
+                                <br>
+    
+                                
+                                <!-- 
+                                <div class="account">
+                                    <p>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="35px" height="35px" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
+                                        <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"></path>
+                                        </svg>
+                                    </p>
+                                    <p>페이스북</p>
+                                    <a><p id="plus_button" style="font: 40px;left: 350px;">+</p></a>
+                                </div>
+            
+                                <br>
+                                <div class="account">
+                                    <p>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="35px" height="35px" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
+                                            <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"></path>
+                                        </svg>
+                                    </p>
+                                    <p>트위터</p>
+                                    <a><p id="plus_button" style="font: 40px;left:370px">+</p></a>
+                                </div>
+                                <br>
+                                
+                                <div class="account">
+                                    <p>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="35px" height="35px" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">
+                                            <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"></path>
+                                        </svg>
+                                    </p>
+                                    <p>인스타그램</p>
+                                    <a><p id="plus_button" style="font: 40px; left:330px">+</p></a>
+                                </div>
+                                 -->
+                            </div>
+                
+                
+                
+                            <div class="popup_footer"></div>
+                                <div class="config_cancel">
+                                    <button type="button" id="close" class="log_login">확인</button>
+                                    <button type="button" id="close" class="log_login">취소</button>
+                                </div> 
+                            </div>
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+        </form>
+        
+        <!-- <div class="link_account"> 
+            <h2>
+                계정연동 하시겠습니까?
+            </h2>
+            <p>반려동물 계정 1개를 연결해주세요.</p>
+            회원가입완료 버튼
+        
+            <div class="id_area" style="margin:50px 0px 150px 0px">
+                <label style="font-size: 21px;">페이스북</label><br>
+                <input type="text" name="id" placeholder="URL을 입력해주세요">
+                
+            </div>
+
+            <div class="config_cancel">
+                <input type="submit" title="확인" alt="확인" value="확인" class="log_login">
+                <input type="submit" title="취소" alt="취소" value="취소" class="log_login">
+            </div> 
+        </div>-->
+
+        
+        <script>
+            function show() {
+              document.querySelector(".background").className = "background show";
+            }
+      
+            function close() {
+              document.querySelector(".background").className = "background";
+            }
+      
+            document.querySelector("#show").addEventListener("click", show);
+            document.querySelector("#close").addEventListener("click", close);
+        </script>
+    {% endblock %}

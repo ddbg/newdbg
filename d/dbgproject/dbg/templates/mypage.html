@@ -1,0 +1,248 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang = "kr">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+         <!--부트스트랩 CSS/JS-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="{% static 'app_name/css/document.css' %}">
+
+
+        <style>
+
+            @font-face {
+            font-family: 'GmarketSansLight';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            }
+
+            body{
+                max-width: 850px;
+                max-height: 660px;
+                background-color: #726C7B;
+            }
+
+            .MainImage{
+                width:450px;
+                height:190px;
+                margin-bottom: 30px;
+                border-radius: 10px;
+            }
+
+            .profile-img{
+                position:absoulte;
+                width:110%;
+                height:50%;
+                object-fit: cover;
+                border-radius: 50px;
+                
+            }
+            .img-thumbnail{
+                position:absoulte;
+                width: 100%;
+                height:100%;
+                object-fit:cover;
+                border-radius: 10px;
+               
+            }
+            .mypage-menu{
+                margin: -5px;
+                color:#BEB5D3;
+                text-align: left;
+            }
+            .mypageShape{
+                margin-left:10px;
+                margin-top: 10px;
+                width: 820px;
+                height:575px;
+                background-image:url("{% static 'MypageBackground.png' %}");
+                background-size: 100%;
+                display :flex;
+                flex-direction:row;
+            }
+            .line{
+                margin-top: -5px;
+                margin-bottom: 5px;
+                width: 290px;
+                height : 3px;
+                background-color:thistle;
+            }
+            .listline{
+                margin-top: 11px;
+                width: 2px;
+                height : 250px;
+                background-color: thistle;;
+            }
+            
+            .left {
+                width: 180px;
+                height: 445px;
+                padding : 20px;
+                margin : 30px;
+                color:#726C7B;
+            }
+            .right {
+                width: 450px;
+                height: 445px;
+                padding : 20px;
+                margin : 20px;
+                color:#726C7B;
+            }
+
+            .Missyou-img{
+                position:absolute;
+                width:10%;
+                height:13%;
+                object-fit: cover;
+                border-radius: 20px;
+                box-shadow: 2px 4px 12px 0 rgb(0 0 0 / 14%);
+            }
+
+            .nametag{
+                width: 50px;
+                height: 445px;
+                padding : 20px;
+                margin : 9px;
+                color: #726C7B;
+            }
+
+            .showtag{
+                text-align: center;
+                width :80px;
+                height : 40px;
+                background-image:url("{% static 'nametag.png' %}");
+                background-size: 100%;
+
+                
+            }
+            
+            .rightlist{
+                display :flex;
+                flex-direction:row;
+            }
+
+            .listright{
+                margin-left: 10px;
+            }
+
+            .Nonshowtag{
+                margin-left: 32px;
+                width :65px;
+                height : 32px;
+                background-image:url("{% static 'nametag.png' %}");
+                background-size: 100%;
+
+            }
+
+        </style>
+
+    </head>
+    <body onresize="parent.resizeTo(870,660)" onload="parent.resizeTo(870,660)" link="#726C7B", vlink="#726C7B", alink="#726C7B">
+        {% csrf_token %}
+        <!-- 기본 모양 --> 
+        <div class="mypageShape">
+
+            <!-- 왼쪽 프레임 관리 -->
+            <div class="left"> 
+                <br>
+                <img src = "{{Animal.profile_photo.url}}" class="profile-img">
+                <br>
+                <h3>{{Animal.name}}</h3>
+                <strong>{{Animal.birthday}} ~ {{Animal.memorialday}}</strong>
+                <br>
+                <br>
+                <strong>{{Animal.introduce}}</strong>
+                <br><br><br><br><br><br><a href = "{%url 'mypageOption' animal.animal_id%}" style="text-decoration: none;">계정관리</a>
+            </div>
+
+            <!-- 오른쪽 프레임 관리 -->
+            <div class="right">
+                {%csrf_token%}
+
+                    <!-- 방 꾸미기 -->
+                    <div class="MainImage"><br>
+                        {{Animal.season}}  
+                        {{Animal.flowers}}
+                        {{Animal.gravestone}}    
+                    </div>
+
+                    <div class="rightlist">
+                        <div class = "listleft">
+                            <!-- 오늘 하루를 들려줄게 -->
+                            <table>
+                                <tbody class="Diary">
+                                    <h3><a href = "{% url 'mypageDiary' animal.animal_id %}" style="text-decoration: none;"><span>오늘 하루를 들려줄게</span></a></h3>
+                                    <div class = "line">
+                                    </div>
+                                    {% for Diary in mypageDiary%}
+                                    <a herf = " {% url 'mypageDiary' %}" sytle = "text-decoration: none;">{{Diary.pub_date}}<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{Diary.title}}</span></a><br>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+
+                            <!-- 너가 보고 싶은 날이야 -->
+                            <table>
+                                <tbody class="Diary">
+                                    <h3><a href = "{%url 'mypagePhoto' animal.animal_id%}" style="text-decoration: none;"><span>너가 보고 싶은 날이야</span></a></h3>
+                                    <div class="line">
+                                    </div>
+                                    <br>
+                                    {% for Gallery in mypagePhoto%}
+                                    <a herf = " {%url 'mypagePhoto' animal.animal_id%}" sytle = "text-decoration: none;"><img src = {{Gallery.image}} class ="Missyou-img" alt=""></a>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="listline"></div>
+
+                        <div class ="listright">
+                            <table>
+                                <tbody class="VisitorBook">
+                                    <h3><a href = "{%url 'mypageVisitorBook' animal.animal_id%}" style="text-decoration: none;"><span>방명록</span></a></h3>
+
+                                    {% for VisitorBook in mypageVisitorBook%}
+                                    <a herf = " {%url 'mypageVisitorBook'%}" sytle = "text-decoration: none;">{{VisitorBook.pub_date}}<span>&nbsp;&nbsp;{{VisitorBook.title}}</span></a><br>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+            </div>
+
+
+            <!-- 이름 선택 부분 -->
+            <div class="nametag">
+                <br><br>
+                <div class = "showtag" >
+                   <strong>&nbsp;animal_id</strong>
+                </div>
+                <br>
+                <br>
+                <div class = "Nonshowtag">
+                    <strong>&nbsp;&nbsp;animal_id</strong>
+                </div>
+                <br>
+                <br>
+                <div class = "Nonshowtag">
+                    <strong>&nbsp;&nbsp;animal_id</strong>
+                </div>
+                <br>
+                <br>
+                <div class = "Nonshowtag">
+                    <strong>&nbsp;&nbsp;animal_id</strong>
+                </div>
+
+            </div>
+        </div>
+    </body>
+</html>

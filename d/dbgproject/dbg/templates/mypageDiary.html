@@ -1,0 +1,220 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang = "kr">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+         <!--부트스트랩 CSS/JS-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="{% static 'app_name/css/document.css' %}">
+
+
+        <style>
+
+            @font-face {
+            font-family: 'GmarketSansLight';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            }
+
+            body{
+                max-width: 850px;
+                max-height: 660px;
+                background-color: #726C7B;
+            }
+
+            .profile-img{
+                position:absoulte;
+                width:110%;
+                height:50%;
+                object-fit: cover;
+                border-radius: 50px;
+                box-shadow: 2px 4px 12px 0 rgb(0 0 0 / 14%);
+            }
+            .img-thumbnail{
+                position:absoulte;
+                width: 105%;
+                height:200px;
+                object-fit:cover;
+                border-radius: 10px;
+                box-shadow: 2px 4px 12px 0 rgb(0 0 0 / 14%);
+            }
+            .mypage-menu{
+                margin: -5px;
+                color:#BEB5D3;
+                text-align: left;
+            }
+            .mypageShape{
+                margin-left:10px;
+                margin-top: 10px;
+                width: 820px;
+                height:575px;
+                background-image:url("{% static 'MypageBackground.png' %}");
+                background-size: 100%;
+                display :flex;
+                flex-direction:row;
+            }
+
+            .line{
+                margin-top: -5px;
+                margin-bottom: 5px;
+                width: 450px;
+                height : 3px;
+                background-color: black;
+            }
+            
+            .left {
+                width: 180px;
+                height: 445px;
+                padding : 20px;
+                margin : 30px;
+                color:#726C7B;
+            }
+            .right {
+                width: 450px;
+                height: 445px;
+                padding : 20px;
+                margin : 20px;
+                color:#726C7B;
+            }
+
+            .nametag{
+                width: 50px;
+                height: 445px;
+                padding : 20px;
+                margin : 9px;
+                color: #726C7B;
+            }
+
+            .showtag{
+                text-align: center;
+                width :80px;
+                height : 40px;
+                background-image:url("{% static 'nametag.png' %}");
+                background-size: 100%;
+
+                
+            }
+
+            .Nonshowtag{
+                margin-left: 32px;
+                width :65px;
+                height : 32px;
+                background-image:url("{% static 'nametag.png' %}");
+                background-size: 100%;
+
+            }
+
+            .infoBox{ 
+                color:#726C7B;
+            }
+
+            .submitBtn{
+                width : 454px;
+                display: flex;
+                justify-content: flex-end;
+                margin-top: 3px;
+            }
+
+            .Diarysave{
+                margin-top: -15px;
+                width : 455px;
+                height: 280px;
+                background-color: #EFECF4;
+                border: 2px dashed black;
+                overflow: auto;
+                padding: 15px;
+            }
+            
+            .Diaryprofile{
+                width: 3%;
+                height: 3%;
+            }
+
+            .Diary-title{
+                margin-left: 15px;
+                margin-top: -17px;
+            }
+        </style>
+
+    </head>
+    <body onresize="parent.resizeTo(870,660)" onload="parent.resizeTo(870,660)" link="#726C7B", vlink="#726C7B", alink="#726C7B">
+        <!-- 기본 모양 --> 
+        <div class="mypageShape">
+
+            <!-- 왼쪽 프레임 관리 -->
+            <div class="left"> 
+                <br>
+                <img src = "{{Animal.profile_photo}}" class="profile-img">
+                <br>
+                <h3>{{Animal.name}}</h3>
+                <strong>{{Animal.birthday}} ~ {{Animal.memorialday}}</strong>
+                <br>
+                <br>
+                <strong>{{Animal.introduce}}</strong>
+                <br><br><br><br><br><br><a href = "{%url 'mypageOption' animal.animal_id%}" style="text-decoration: none;">계정관리</a>
+            </div>
+
+            <!-- 오른쪽 프레임 관리 -->
+            <div class="right">
+                <h2>오늘 하루를 들려줄게</h2>
+                <div class="line"></div>
+
+                <form action = "{% url 'mypageDiaryCreate' %}" method= "post"}>
+                    
+                    <div class="infoBox">
+                        {% csrf_token %}
+                        <textarea name="Diary" cols="60", rows="4"></textarea>
+                        <div class="submitBtn">
+                            <button type="button" type="submit" value="Diary" class="btn btn-info">등록하기</button>
+                        </div>
+                    </div>
+                </form>
+                <br>
+                <div class="Diarysave">
+                    {% for Animal in mypages %}
+                        <div class="Diary-title"> 
+                            <strong>&nbsp;&nbsp; {{Animal.diary_pub_date}}  {{Animal.diary_title}}</strong>
+                        
+                            <div class="Diary-content">
+                                &nbsp;
+                                {{Animal.diary_body}}
+                            </div> 
+                        </div><br><br><br>
+                    {% endfor %}
+                </div>
+                
+
+            </div>
+
+            <div class="nametag">    
+                <br><br>
+                <div class = "showtag">
+                   <strong>&nbsp;&nbsp;Animal_name</strong>
+                </div>
+                <br>
+                <br>
+                <div class = "Nonshowtag">
+                    <strong>&nbsp;&nbsp;Animal_name</strong>
+                </div>
+                <br>
+                <br>
+                <div class = "Nonshowtag">
+                    <strong>&nbsp;&nbsp;Animal_name</strong>
+                </div>
+                <br>
+                <br>
+                <div class = "Nonshowtag">
+                    <strong>&nbsp;&nbsp;Animal_name</strong>
+                </div>
+        </div>
+    </body>
+</html>
