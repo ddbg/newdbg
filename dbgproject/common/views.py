@@ -8,20 +8,24 @@ from django.contrib import auth
 # Create your views here.
 
 def login_view(request):
-    if request.method == 'POST':
-        form=AuthenticationForm(request=request,data = request.POST)
-        if form.is_valid():
-            user_id = request.POST["user_id"]
-            user_password= request.POST["user_password"]
-            user = authenticate(request=request,user_id=user_id, user_password=user_password)
-            if user is not None:
-                login(request, user)
-        return redirect("home")
 
+    
+    if request.method == 'POST':
+        form= AuthenticationForm(request=request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
+
+            # user = 인증을 받는 객체
+            user = authenticate(request=request, username=username, password=password)
+            if user is not None:    # user가 존재하면
+                login(request,user)
+            
+        return redirect("home")
     else:
-        form=AuthenticationForm()
-        return render(request, "login.html")
-         
+        # login.html을 랜더링 = GET 방식
+        form = AuthenticationForm()
+        return render(request, 'login.html', {'form':form})
 
 
 def logout_view(request):

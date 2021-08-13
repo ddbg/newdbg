@@ -98,31 +98,13 @@
         <br>
         <form action="{%url 'login'%}" method="POST">
             {%csrf_token%}
+            {{form.as_p}}
 
-            <!-- {% if not user.is_authenticated %}
-            <p>아이디 또는 비밀번호가 틀렸습니다.</p>
-            {% endif %} -->
-
-            <!-- 아이디/비번 입력 창-->
-            <div class="id_area">
-                <input type="text" name="id" placeholder="아이디">
-            </div>
-            <br>
-
-            <div class="id_area">
-                <input type="password" name="password" placeholder="비밀번호">
-            </div>
             
-            <!--로그인 상태 유지 창-->
-            <div class="login_stay" style="text-align: left;">
-                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                <label class="form-check-label" for="defaultCheck1">
-                로그인 상태 유지
-                </label>
-            </div>
             <!--로그인 클릭 버튼-->
-            <input type="submit" title="로그인" alt="로그인" value="로그인" class="log_login">
+            <button type="submit" class="log_login">로그인</button>
         </form>
+        
         <br>
         <!--회원가입, 아이디 찾기, 비밀번호 찾기 페이지 연결-->
         <div class= "position_a">
